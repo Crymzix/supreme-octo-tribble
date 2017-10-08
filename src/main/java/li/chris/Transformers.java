@@ -42,15 +42,15 @@ public class Transformers {
                     autobotWinCount++;
                     decepticon.setDefeated(true);
                     continue;
+                } else {
+                    break;
                 }
             } else if (decepticon.getName().equals(Transformer.OPTIMUS_PRIME_NAME) || decepticon.getName().equals(Transformer.PREDAKING_NAME)) {
                 if (!autobot.getName().equals(Transformer.OPTIMUS_PRIME_NAME) && !autobot.getName().equals(Transformer.PREDAKING_NAME)) {
                     decepticonWinCount++;
                     autobot.setDefeated(true);
                     continue;
-                }
-            } else if (autobot.getName().equals(Transformer.OPTIMUS_PRIME_NAME) || autobot.getName().equals(Transformer.PREDAKING_NAME)) {
-                if (decepticon.getName().equals(Transformer.OPTIMUS_PRIME_NAME) || decepticon.getName().equals(Transformer.PREDAKING_NAME)) {
+                } else {
                     break;
                 }
             }
@@ -62,7 +62,7 @@ public class Transformers {
                 autobotWinCount++;
                 decepticon.setDefeated(true);
                 continue;
-            } else if (courageDifference <= -4 && strengthDifference <= -4) {
+            } else if (courageDifference <= -4 && strengthDifference <= -3) {
                 decepticonWinCount++;
                 autobot.setDefeated(true);
                 continue;
