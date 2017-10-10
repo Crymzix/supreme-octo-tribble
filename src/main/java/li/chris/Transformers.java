@@ -3,12 +3,49 @@ package li.chris;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 /**
  * Created by Chris on 2017-10-07.
  */
 public class Transformers {
+
+    /**
+     * Data for each Transformer will be read line by line as they are inputted. Once there is a
+     * new line that does not contain any content (by just pressing ENTER again without inputting
+     * anything) the battleTransformers() method is called and the desired output will be printed
+     * to console.
+     */
+    public static void main(String[] args) {
+
+        Scanner in = new Scanner(System.in);
+
+        List<Transformer> transformers = new ArrayList<>();
+
+        boolean shouldBattle = false;
+        while (!shouldBattle) {
+            String line = in.nextLine();
+            if (!line.isEmpty()) {
+                String[] attributes = line.split(",");
+                if (attributes.length == 10) {
+                    int[] techSpecs = new int[8];
+                    for (int i = 2; i < attributes.length; i++) {
+                        techSpecs[i - 2] = Integer.parseInt(attributes[i].trim());
+                    }
+                    Transformer transformer = new Transformer(attributes[0].trim(), attributes[1].trim(), techSpecs);
+                    transformers.add(transformer);
+                } else {
+                    System.out.println("Invalid number of parameters.");
+                }
+            } else {
+                shouldBattle = true;
+            }
+        }
+
+        System.out.println("\n");
+        battleTransformers(transformers);
+    }
 
     public static void battleTransformers(List<Transformer> transformers) {
 
@@ -18,7 +55,7 @@ public class Transformers {
         for (Transformer transformer : transformers) {
             if (transformer.getTeam().equals(Transformer.AUTOBOT_TEAM)) {
                 autobots.add(transformer);
-            } else {
+            } else if (transformer.getTeam().equals(Transformer.DECEPTICON_TEAM)) {
                 decepticons.add(transformer);
             }
         }
@@ -160,6 +197,13 @@ public class Transformers {
 
         private boolean isDefeated = false;
 
+        /**
+         * @param name the name of the Transformer.
+         * @param team a String representing the team the Transformer is on, "A" or "D"
+         * @param techSpecs an array of Integers representing the Transformer's criteria ratings,
+         *                  ordered from indexes 0 to 7, like so: Strength, Intelligence, Speed,
+         *                  Endurance, Rank, Courage, Firepower and Skill.
+         */
         public Transformer(String name, String team, int[] techSpecs) {
             this.name = name;
             this.team = team;

@@ -110,6 +110,16 @@ public class TransformersTest {
     }
 
     @Test
+    public void testOptimusVsPredaking() {
+        List<Transformers.Transformer> transformers = new ArrayList<>();
+        transformers.add(new Transformers.Transformer("Optimus Prime", "A", new int[]{6, 6, 7, 9, 5, 2, 9, 7}));
+        transformers.add(new Transformers.Transformer("Predaking", "D", new int[]{9, 9, 9, 9, 5, 2, 9, 7}));
+        battleTransformers(transformers);
+        assertTrue(outputStream.toString().contains("1 battle"));
+        assertTrue(outputStream.toString().contains("No winners"));
+    }
+
+    @Test
     public void testOptimusVsNormal() {
         List<Transformers.Transformer> transformers = new ArrayList<>();
         transformers.add(new Transformers.Transformer("Optimus Prime", "A", new int[]{1, 1, 1, 1, 1, 1, 1, 1}));
@@ -117,6 +127,17 @@ public class TransformersTest {
         battleTransformers(transformers);
         assertTrue(outputStream.toString().contains("1 battle"));
         assertTrue(outputStream.toString().contains("Winning team (Autobots): Optimus Prime"));
+        assertTrue(!outputStream.toString().contains("Survivors from the losing team (Decepticons): Bumble Bee"));
+    }
+
+    @Test
+    public void testPredakingVsNormal() {
+        List<Transformers.Transformer> transformers = new ArrayList<>();
+        transformers.add(new Transformers.Transformer("Predaking", "A", new int[]{1, 1, 1, 1, 1, 1, 1, 1}));
+        transformers.add(new Transformers.Transformer("Bumble Bee", "D", new int[]{6, 6, 7, 9, 5, 2, 9, 7}));
+        battleTransformers(transformers);
+        assertTrue(outputStream.toString().contains("1 battle"));
+        assertTrue(outputStream.toString().contains("Winning team (Autobots): Predaking"));
         assertTrue(!outputStream.toString().contains("Survivors from the losing team (Decepticons): Bumble Bee"));
     }
 
